@@ -1,4 +1,4 @@
-# 平时过程中收录的一些知识点
+# 平时过程中收录的一些知识点(面试也可以看看，无意进入的朋友可以看看，有问题可以issues)
 
 
 
@@ -181,6 +181,18 @@ child.say()
 ```
 
 
+### es6 super 作用
+1. 实质是先将父类实例对象的属性和方法，加到this上面(构造函数内执行父类构造函数，并可以将父类的值带上)
+```
+class A {}
+
+class B extends A {
+  constructor() {
+    super();  //相当于 A.prototype.constructor.call(this)
+  }
+}
+```
+
 
 ### 关键字new创建新实例对象发生的事情
 1. 创建新对象
@@ -195,3 +207,298 @@ obj.__proto__ = Par.prototype  // 原型链指向父级原型
 Par.apply(obj)   //执行构造函数，内部this指向新对象
 // obj 类似 new Par() 
 ```
+
+
+### js里的作用域是什么样子的？
+> 大多数语言里边都是块作作用域，以{}进行限定，js里边不是．js里边叫函数作用域，就是一个变量在全函数里有效．比如有个变量p1在函数最后一行定义，第一行也有效，但是值是undefined.
+
+```
+	var globalVar = 'global var';
+
+	function test() {
+		alert(globalVar); // undefined, 因为globalVar在本函数内被重定义了，导致全局失效，这里使用函数内的变量值，可是此时还没定义
+		var globalVar = 'overrided var'; //　globalVar在本函数内被重定义
+		alert(globalVar);　// overrided var
+	}
+	alert(globalVar); // global var，使用全局变量
+```
+
+
+### js里边的this指的是什么?
+> es5 this 调用时环境对象， es6箭头函数 定义时外层对象
+
+### call、apply、bind 区别
+1. call与apply主要是传参的区别，apply是数组
+2. bind 与 call apply的区别在于bind返回函数，后两者是立即执行
+实现bind源码
+```
+Function.prototype.bind = function(context){
+    let 
+        _this = this,
+        args = Array.prototype.slice(arguments, 1);
+    return function(){
+        _this.apply(context, args)
+    }
+}
+```
+
+### callee、 caller区别
+1. arguments.callee 指向当前函数
+2. a.caller 指向调用a函数的外层函数
+
+### await是让出一个线程的标志，await语句后表达式会执行，然后将后面的代码加入到微任务，然后跳出整个async函数来执行后面的代码
+
+```
+async function async1() {
+    console.log('async1 start');
+    await async2();  //执行async2函数代码，将后面console.log('async1 end')加入微任务
+    console.log('async1 end');
+}
+async function async2() {
+    console.log('async2');
+}
+console.log('script start');
+setTimeout(function() {
+    console.log('setTimeout');
+}, 0)
+async1();
+new Promise(function(resolve) {
+    console.log('promise1');
+    resolve();
+}).then(function() {
+    console.log('promise2');
+});
+console.log('script end');
+
+//运行结果 
+// script start
+// async1 start
+// async2
+// promise1
+// script end
+// async1 end
+// promise2
+// setTimeout
+```
+
+
+### React setState什么时候是同步的
+> 放入setTimeout 等异步队列时，变成同步执行
+```
+class Example extends React.Component {
+    constructor() {
+      super();
+      this.state = {
+        val: 0
+      };
+    }
+    
+    componentDidMount() {
+      this.setState({val: this.state.val + 1});
+      console.log(this.state.val);  //0    // 第 1 次 log
+  
+      this.setState({val: this.state.val + 1});
+      console.log(this.state.val);  //0  // 第 2 次 log
+  
+      setTimeout(() => {
+        this.setState({val: this.state.val + 1});
+        console.log(this.state.val); //3 // 第 3 次 log
+  
+        this.setState({val: this.state.val + 1});
+        console.log(this.state.val);  //4 // 第 4 次 log
+      }, 0);
+    }
+  
+    render() {
+      return null;
+    }
+  };
+```
+
+
+### 介绍下 npm 模块安装机制，为什么输入 npm install 就可以自动安装对应的模块？
+
+讲解[https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/22]
+
+
+### Object.prototype.toString.call() 、 instanceof 以及 Array.isArray() 请分别介绍它们之间的区别和优劣  
+1. Array.isArray() 性能最优，仅针对array类型检测，并且可以检测iframes
+2. instanceof 性能其次 通过判断对象的原型链中是不是能找到类型的 prototype 不能判断基本类型数据
+3. Object.prototype.toString.call() 性能最差 可以对于所有基本的数据类型都能进行判断，即使是 null 和 undefined。
+
+### 重绘和回流
+1.由于节点的几何属性发生改变或者由于样式发生改变而不会影响布局的，称为重绘
+2.回流是布局或者几何属性需要改变就称为回流，一个元素的回流可能会导致了其所有子元素以及DOM中紧随其后的节点、祖先节点元素的随后的回流。
+
+### 实现call代码
+
+```
+Function.prototype.callFn = function(context){
+    if(typeof this !== 'function'){
+        throw new TypeError('not function')
+    }
+    let args = [...arguments].slice(1)
+    context = context || window
+    context.fn = this
+    let result = context.fn(...args)
+    delete context.fn
+    return result
+}
+```
+
+### 实现apply代码
+
+```
+Function.prototype.applyFn = function(context){
+    if(typeof this !== 'function'){
+        throw new TypeError('not function')
+    }
+    let result
+    context = context || window
+    context.fn = this
+    if(arguments[1]){
+        result = context.fn(...arguments[1])
+    }else{
+        result = context.fn()
+    } 
+    delete context.fn
+    return result
+}
+```
+
+### 实现bind代码
+```
+Function.prototype.bindFn = function(context){
+    if(typeof this !== 'function'){
+        throw new TypeError('not function')
+    }
+    let 
+        result,
+        args = [...arguments].slice(1);
+    context = context || window
+    context.fn = this 
+    return function F(){
+        if(this instanceof F){  //使用new调用
+            return new context.fn(...args, ...arguments)
+        }else{ //当做函数调用
+            return context.fn(...args.concat(...arguments))
+        }
+    }
+}
+```
+### 实现Object.create
+> Object.create()方法创建一个新对象，使用现有的对象来提供新创建的对象的__proto__。返回的是一个空对象
+
+```
+function create(obj) {
+  function F() {}
+  F.prototype = obj
+  return new F()
+}
+``` 
+
+### 模块化发展历程
+1. IIFE 使用自执行函数编写模块化，在一个单独函数作用域中执行代码，避免变量冲突
+
+2. AMD 使用requireJS来编写模块化 特点： <strong>依赖必须提前声明好</strong>
+```
+define('./index.js',function(code){
+	// code 就是index.js 返回的内容
+})
+```
+
+3. CMD 使用seaJS来编写模块化  特点：<strong>支持动态引入依赖文件</strong>
+```
+define(function(require, exports, module) {  
+  var indexCode = require('./index.js');
+});
+```
+4. CommonJS node模块化标准
+```
+let fs = require('fs')
+```
+
+5. UMD 兼容AMD，CommonJS模块化语法
+
+6. es6 Module es6引入的模块化 支持import引入另一个js
+```
+import a from 'a'
+```
+
+### 全局作用域中，用 const 和 let 声明的变量不在 window 上，那到底在哪里？如何去获取？
+> ES6规定，var 命令和 function 命令声明的全局变量，依旧是顶层对象的属性，但 let命令、const命令、class命令声明的全局变量，不属于顶层对象的属性。
+```
+let aa = 1;
+const bb = 2;
+
+console.log(window.aa); // undefined
+console.log(window.bb); // undefined
+```
+>var let const三种，前者因为var的变量会提升到window，但是let个const不会，let ，const会生成块作用域，同一作用域下let和const不能声明同名变量，而var可以
+
+>let const 定义的变量在块级作用域（Script）中，获取值直接访问变量就可以访问
+```
+//const和let会生成块级作用域，可以理解为
+let a = 10;
+const b = 20;
+相当于：
+(function(){
+         var  a = 10;
+         var b = 20;
+})()
+```
+
+### 考察函数声明与函数表达式声明
+1. 函数声明会被提升到作用域的最前面，即使写代码的时候是写在最后面，也还是会被提升至最前面。
+2. 函数表达式创建的函数是在运行时进行赋值，且要等到表达式赋值完成后才能调用
+ 
+```
+getName();  //5 调用5的函数
+var getName = function () { console.log(4);
+  };
+function getName() { console.log (5);}
+ 
+getName();   //4 运行时执行，表达式赋值函数，覆盖5的函数
+
+```
+
+### XSS 和 CSRF
+#### XSS
+***
+XSS，即 Cross Site Script，中译是跨站脚本攻击，XSS 攻击是指攻击者在网站上注入恶意的客户端代码，通过恶意脚本对客户端网页进行篡改，从而在用户浏览网页时，对用户浏览器进行控制或者获取用户隐私数据的一种攻击方式。
+
+攻击者对客户端网页注入的恶意脚本一般包括 JavaScript，有时也会包含 HTML 和 Flash。有很多种方式进行 XSS 攻击，但它们的共同点为：将一些隐私数据像 cookie、session 发送给攻击者，将受害者重定向到一个由攻击者控制的网站，在受害者的机器上进行一些恶意操作。
+
+XSS攻击可以分为3类：反射型（非持久型）、存储型（持久型）、基于DOM。
+
+防范方法： 
+1. 浏览器将禁止页面的Javascript 访问带有 HttpOnly 属性的Cookie。
+2. 输入检查 
+> 用户的任何输入都不能相信。 对于用户的任何输入要进行检查、过滤和转义。建立可信任的字符和 HTML 标签白名单，对于不在白名单之列的字符或者标签进行过滤或编码。
+3. 输出检查
+> 用户的输入会存在问题，服务端的输出也会存在问题。一般来说，除富文本的输出外，在变量输出到 HTML 页面时，可以使用编码或转义的方式来防御 XSS 攻击。例如利用 sanitize-html 对输出内容进行有规则的过滤之后再输出到页面中。
+
+
+[如何防止XSS攻击？](https://juejin.im/post/5bad9140e51d450e935c6d64)
+
+#### CSRF
+****
+CSRF，即 Cross Site Request Forgery，中译是跨站请求伪造，是一种劫持受信任用户向服务器发送非预期请求的攻击方式。
+
+通常情况下，CSRF 攻击是攻击者借助受害者的 Cookie 骗取服务器的信任，可以在受害者毫不知情的情况下以受害者名义伪造请求发送给受攻击服务器，从而在并未授权的情况下执行在权限保护之下的操作。
+
+防范方法： 
+1. 验证码(只部分接口有效)
+2. Referer Check
+    根据 HTTP 协议，在 HTTP 头中有一个字段叫 Referer，它记录了该 HTTP 请求的来源地址。通过 Referer Check，可以检查请求是否来自合法的"源"。
+3. Token 验证
+   例如： PHP Laravel框架VerifyCSRFToken中间件生成X-XSRF-TOKEN验证是否跨站请求
+
+[浅谈CSRF攻击方式](https://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html)
+
+
+
+[浅说XSS和CSRF](https://github.com/dwqs/blog/issues/68)
+
+
+
