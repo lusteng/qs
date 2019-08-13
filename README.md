@@ -4,7 +4,28 @@
 
  面试讲项目的时候 介绍项目的场景和背景，使用了什么技术， 前端有多少人，前端负责哪一块，我负责哪一块，以及解决了什么问题
 
-     promise  类似jquery1.5之后版本，更方便扩展，解决回调地狱
+     promise 有点像状态机，解决了异步的问题  类似jquery1.5之后版本，更方便扩展，解决回调地狱
+
+    promise 回调函数传入两个参数 resolve 和 reject，函数体中执行哪个参数(或者说符合哪种条件调用哪个参数函数)，then的回调就是该函数
+
+    ``` 
+      let pro = new Promise((resolve, reject) => {
+          if(true){
+              resolve()
+          }else{
+              reject()
+          }
+      }) 
+      pro.then(() => {}, () => {})  // 执行前者
+      
+      let pro = new Promise((resolve, reject) => {
+      
+        reject() 
+      }) 
+      pro.then(() => {}, () => {})  // 执行后者
+
+    ```
+
      promise.all  返回所有promise结果在一个数组中
      promise.race  返回最先执行的promise结果
 
@@ -501,4 +522,53 @@ CSRF，即 Cross Site Request Forgery，中译是跨站请求伪造，是一种�
 [浅说XSS和CSRF](https://github.com/dwqs/blog/issues/68)
 
 
+### vue Object.defineProperty 的缺陷
+1. 在Vue中，Object.defineProperty无法监控到数组下标的变化，导致直接通过数组的下标给数组设置值，不能实时响应。 为了解决这个问题，经过vue内部处理后可以使用以下几种方法来监听数组
+（评论区有提到，Object.defineProperty本身是可以监控到数组下标的变化的 
+2. Object.defineProperty只能劫持对象的属性,因此我们需要对每个对象的每个属性进行遍历。Vue里，是通过递归以及遍历data 对象来实现对数据的监控的，如果属性值也是对象那么需要深度遍历,显然如果能劫持一个完整的对象，不管是对操作性还是性能都会有一个很大的提升
+ 
+
+### Promise.all 实现
+
+```
+Promise.all = function(promises){
+    if(!Array.isArray(promises)){
+        throw new Error("then params must is array")
+        return 
+    }
+    return new Promise((resolve, reject) => {
+        if(promises.length === 0){
+            resolve([])
+        }else{
+            let result = [] 
+            for (let i = 0;  i < promises.length; i++ ) {
+                Promise.resolve(promises[i]).then(res => {
+                    result.push(res)
+                    if(i === promises.length - 1){ 
+                        resolve(result)  
+                    }
+                }, err => {
+                    reject(err)
+                    return 
+                })
+            }
+        }
+    })
+}
+```
+
+### 异步加载 js 脚本的方法有哪些？
+1. script标签中增加 async(html5) 或者 defer(html4) 属性,脚本就会异步加载。
+
+defer 和 async 的区别在于：
+
++ defer 要等到整个页面在内存中正常渲染结束（DOM 结构完全生成，以及其他脚本执行完成），在window.onload 之前执行；
+
++ async 一旦下载完，渲染引擎就会中断渲染，执行这个脚本以后，再继续渲染。
+如果有多个 defer 脚本，会按照它们在页面出现的顺序加载
+
++ 多个 async 脚本不能保证加载顺序 
+
+2. 动态创建 script 标签
+3. XHR 异步加载JS
 
