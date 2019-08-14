@@ -572,3 +572,27 @@ defer 和 async 的区别在于：
 2. 动态创建 script 标签
 3. XHR 异步加载JS
 
+
+
+### input如何处理中文输入
+> 使用compositionstart 和 compositionend事件对中文输入法下做处理
+[参考](http://shenyujie.cc/2017/08/24/indirectInput/)
+
+###  react-router 里的 <Link> 标签和 <a> 标签有什么区别 如何禁掉 <a> 标签默认事件，禁掉之后如何实现跳转。
++ <Link> 是 react-router 里实现路由跳转的链接，一般配合 <Route> 使用，react-router 接管了其默认的链接跳转行为，区别于传统的页面跳转，<Link> 的“跳转”行为只会触发相匹配的 <Route> 对应的页面内容更新，而不会刷新整个页面。
++ 禁掉 a 标签的默认事件，可以在点击事件中执行 event.preventDefault();
++ 禁掉默认事件的 a 标签 可以使用 history.pushState() 来改变页面 url，这个方法还会触发页面的 hashchange 事件，Router 内部通过捕获监听这个事件来处理对应的跳转逻辑。
+
+
+### 深拷贝
+> 参考vuex的源码处理
+(https://github.com/vuejs/vuex/blob/dev/src/util.js#L22)
+
+
+
+
+[面试题1](https://juejin.im/post/5d23e750f265da1b855c7bbe#heading-37)
+
+[面试题2](https://juejin.im/post/5cd82463518825692330d440)
+
+[面试题3](https://juejin.im/post/5d46f433e51d4561ca2121fc)
