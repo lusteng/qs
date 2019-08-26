@@ -1,5 +1,22 @@
 # 大杂烩
 
+### node 自动监听运行 nodemon
+1. 安装nodemon
+> 全局 
+```
+npm install -g nodemon
+```
+> 本地安装
+```
+npm install --save-dev nodemon
+```
+2. 启动应用
+```
+nodemon [your node app]
+```
+3. 配合Code Runner vsCode插件的使用 写入到一个cmd配置文件
+
+
 ### http 头行体
 + 请求行： 请求方法、请求地址和协议及版本
 + 请求头： 带有的若干header字段
@@ -117,8 +134,7 @@ socket.on('disconnect', function(){});
 socket.emit('sendMsg', object)
 
 ```
-
-
+ 
 
 
 
