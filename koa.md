@@ -134,8 +134,44 @@ socket.on('disconnect', function(){});
 socket.emit('sendMsg', object)
 
 ```
- 
-
-
-
+  
 [参考koa笔记](https://chenshenhai.github.io/koa2-note/) 
+
+### nodemon（node 热加载） 
+安装 
+```
+npm install -g nodemon
+// or
+npm install --save-dev nodemon
+```
+启动 
+
+```
+nodemon app
+```
+
+### node 部署工具 PM2
+安装
+```
+npm install -g pm2
+```
+使用命令 
+```
+//启动
+pm2 start app.js --name bieming
+//查看信息
+pm2 show (appname|id)
+//查看所有启动的进程列表
+pm2 list 
+//监控每个 node 进程的 cpu 和内存使用情况
+pm2 monit
+//停止 指定/所有 进程
+pm2 stop (id|all)
+//重启 指定/所有 进程
+pm2 restart (id|all)
+//杀死 指定/所有 进程
+pm2 delete (id|all)
+```
+
+
+

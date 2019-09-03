@@ -84,6 +84,11 @@ mpvue  缺点  新建页面要重新npm run dev
 
 宏任务一般是：包括整体代码script，setTimeout，setInterval。
 
+### 理解mvvm 
+可以拆分为m v vm，vm 是vue基于mvc的创新，将mvc模式应用于前端场景，vm是连接view视图层和model数据层的桥梁，达到数据驱动视图的效果，其中view通过事件监听改变model层数据，model通过数据绑定操作view变化 
+![avatar](https://github.com/lusteng/qs/blob/master/images/mvvm-demo.jpg)
+
+
 ### 闭包（可以理解成闭合的作用域，不会随外部而有任何改变）
 闭包通过函数嵌套，内部函数总是可以访问其所在的外部函数中声明的参数和变量，即使在其外部函数被返回（寿命终结）了之后。借此形成一个封闭与外界隔绝的环境。可能通过这种方式在 JavaScript 种实现公有，私有，特权变量 
 两种形式
