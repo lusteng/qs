@@ -1,3 +1,10 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-29 16:04:56
+ * @LastEditTime: 2019-09-05 17:02:49
+ * @LastEditors: Please set LastEditors
+ -->
 # 平时过程中收录的一些知识点(面试也可以看看，无意进入的朋友可以看看，有问题可以issues)
 
 
@@ -87,6 +94,8 @@ mpvue  缺点  新建页面要重新npm run dev
 ### 理解mvvm 
 可以拆分为m v vm，vm 是vue基于mvc的创新，将mvc模式应用于前端场景，vm是连接view视图层和model数据层的桥梁，达到数据驱动视图的效果，其中view通过事件监听改变model层数据，model通过数据绑定操作view变化 
 ![avatar](https://github.com/lusteng/qs/blob/master/images/mvvm-demo.jpg)
+![avatar](https://github.com/lusteng/qs/blob/master/images/mvvm-demo1.jpg)
+
 
 
 ### 闭包（可以理解成闭合的作用域，不会随外部而有任何改变）
@@ -613,9 +622,38 @@ defer 和 async 的区别在于：
 + 5** 服务器错误，服务器在处理请求的过程中发生了错误
 
 
+### vue 路由原理
+hash 模式  使用hashchange监听hash变化
+history 模式  使用h5的history api 使用popstate监听路由变化
+
+### 判断类型，还区分对象、数组类型
+Object.prototype.toString.call(object)
+```
+// 基本类型
+Object.prototype.toString.call(null);          // “[object Null]”
+Object.prototype.toString.call(undefined);     // “[object Undefined]”
+Object.prototype.toString.call("abc");         // “[object String]”
+Object.prototype.toString.call(123);           // “[object Number]”
+Object.prototype.toString.call(true);          // “[object Boolean]”
+// 函数类型
+function fn(){console.log("test");}
+Object.prototype.toString.call(fn);              // “[object Function]”
+// 日期类型
+var date = new Date();
+Object.prototype.toString.call(date);            // “[object Date]”
+// 数组类型
+var arr = [1,2,3];
+Object.prototype.toString.call(arr);             // “[object Array]”
+// 正则表达式
+var reg = /[hbc]at/gi;
+Object.prototype.toString.call(reg);             // “[object RegExp]”
+```
 
 [面试题1](https://juejin.im/post/5d23e750f265da1b855c7bbe#heading-37)
 
 [面试题2](https://juejin.im/post/5cd82463518825692330d440)
 
 [面试题3](https://juejin.im/post/5d46f433e51d4561ca2121fc)
+
+
+
