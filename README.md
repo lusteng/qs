@@ -649,6 +649,9 @@ var reg = /[hbc]at/gi;
 Object.prototype.toString.call(reg);             // “[object RegExp]”
 ```
 
+### react 动画
+[https://tech.youzan.com/react-animations/](https://tech.youzan.com/react-animations/)
+
 [面试题1](https://juejin.im/post/5d23e750f265da1b855c7bbe#heading-37)
 
 [面试题2](https://juejin.im/post/5cd82463518825692330d440)
