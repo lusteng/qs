@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-29 16:04:56
- * @LastEditTime: 2019-09-20 15:51:24
+ * @LastEditTime: 2019-09-20 16:07:28
  * @LastEditors: Please set LastEditors
  -->
 # 平时过程中收录的一些知识点(面试也可以看看，无意进入的朋友可以看看，有问题可以issues)
@@ -676,6 +676,11 @@ tooltip 自定义显示，英文不会折行显示，
 
 ### height 100%和(1/inherit)的区别
 > 平时没区别，主要在于当前元素使用绝对定位时，父级没有设置relative，inherit/1高度可以继承父级, 而100%因为脱离文档流，不能完美继承
+### react 动画
+[https://tech.youzan.com/react-animations/](https://tech.youzan.com/react-animations/)
+
+### react使用fetch原因
+fetch 的API是基于Promise设计的，比较底层，低于做的一些封装，例如我们做了基于前端post方式的下载文件， 
 
 [面试题1](https://juejin.im/post/5d23e750f265da1b855c7bbe#heading-37)
 
