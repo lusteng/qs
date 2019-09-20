@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-29 16:04:56
- * @LastEditTime: 2019-09-05 17:02:49
+ * @LastEditTime: 2019-09-20 15:51:24
  * @LastEditors: Please set LastEditors
  -->
 # 平时过程中收录的一些知识点(面试也可以看看，无意进入的朋友可以看看，有问题可以issues)
@@ -515,11 +515,28 @@ XSS，即 Cross Site Script，中译是跨站脚本攻击，XSS 攻击是指攻�
 
 攻击者对客户端网页注入的恶意脚本一般包括 JavaScript，有时也会包含 HTML 和 Flash。有很多种方式进行 XSS 攻击，但它们的共同点为：将一些隐私数据像 cookie、session 发送给攻击者，将受害者重定向到一个由攻击者控制的网站，在受害者的机器上进行一些恶意操作。
 
-XSS攻击可以分为3类：反射型（非持久型）、存储型（持久型）、基于DOM。
+XSS攻击可以分为3类：
+    反射型（非持久型）:例如通过访问链接带上xs代码
+    存储型（持久型）：将xs代码提交到服务器存储起来
+    基于DOM。
 
-防范方法： 
+防范方法：
+页面预防
+1. 对用户页面输入的内容进行处理
++ 编码 对<、 >、 "、'、空格、换行等进行字符实体编码
++ 过滤 过滤掉script、link、iframe、frame等标签以及便签上的属性、事件 
++ 解码输出
+
+[js xss 转码库](https://github.com/leizongmin/js-xss)
+
+cookie安全
+1. 设置重要的cookie HttpOnly，阻止可能跨站的xs代码读取cookie
+
+
 1. 浏览器将禁止页面的Javascript 访问带有 HttpOnly 属性的Cookie。
 2. 输入检查 
+
+
 > 用户的任何输入都不能相信。 对于用户的任何输入要进行检查、过滤和转义。建立可信任的字符和 HTML 标签白名单，对于不在白名单之列的字符或者标签进行过滤或编码。
 3. 输出检查
 > 用户的输入会存在问题，服务端的输出也会存在问题。一般来说，除富文本的输出外，在变量输出到 HTML 页面时，可以使用编码或转义的方式来防御 XSS 攻击。例如利用 sanitize-html 对输出内容进行有规则的过滤之后再输出到页面中。
@@ -648,6 +665,17 @@ Object.prototype.toString.call(arr);             // “[object Array]”
 var reg = /[hbc]at/gi;
 Object.prototype.toString.call(reg);             // “[object RegExp]”
 ```
+
+### 使用echarts 碰到的坑
+tooltip 自定义显示，英文不会折行显示，
+解决 word-break: break-all; white-space: pre-wrap
+
+### 使用react 碰到的坑
+使用外部父组件传入用户数组直接去map处理，导致其他地方使用的该数组也改变了
+解决 引入Immutable
+
+### height 100%和(1/inherit)的区别
+> 平时没区别，主要在于当前元素使用绝对定位时，父级没有设置relative，inherit/1高度可以继承父级, 而100%因为脱离文档流，不能完美继承
 
 [面试题1](https://juejin.im/post/5d23e750f265da1b855c7bbe#heading-37)
 
