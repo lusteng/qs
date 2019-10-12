@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-29 16:04:56
- * @LastEditTime: 2019-10-10 15:13:40
+ * @LastEditTime: 2019-10-12 17:03:09
  * @LastEditors: Please set LastEditors
  -->
 # 平时过程中收录的一些知识点(面试也可以看看，无意进入的朋友可以看看，有问题可以issues)
@@ -681,6 +681,9 @@ tooltip 自定义显示，英文不会折行显示，
 ### 问题遇坑
 tips： 碰到无法解决问题时通过看源码解决
 使用超出的滚动区间的美化滚动条的vue插件碰到，出现预定条件触发他代码的debugger代码，提issues没有修复，使用公司github代码fork一份代码。改动他的源码
+
+### 碰到的echarts图表展示的一个坑
+画多条线的时候，某条线某天数据点没有数据，造成掉点的线条展示不正确
 
 ### iview 坑，form验证组件，验证内部代码出错不会触发报错
 
