@@ -49,6 +49,8 @@
 2、vue的设计相对于传统jquery 数据与视图层分离，通过数据驱动视图
 3、vue三要素  1、响应式：监听data数据变化 2、模板引擎：解析模板，指令处理 3、渲染： vue模板如何渲染成html
 
+Vue不同于react单向数据流，双向数据流在处理表单时很爽，到时组件层级深容易数据不可控
+
 vue methods也是绑定在vue对象上，在render中生成，v-model即是render里面绑定个事件，set model的值
 
 vue与react的区别
