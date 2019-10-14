@@ -93,6 +93,10 @@ mpvue  缺点  新建页面要重新npm run dev
 
 宏任务一般是：包括整体代码script，setTimeout，setInterval。
 
+fn.prototype 构造函数的原型对象
+fn.prototype.constructor 指向构造函数
+fn 的实例有个隐式指针 __proto__指向其构造函数的原型对象 fn.prototype
+
 ### 理解mvvm 
 可以拆分为m v vm，vm 是vue基于mvc的创新，将mvc模式应用于前端场景，vm是连接view视图层和model数据层的桥梁，达到数据驱动视图的效果，其中view通过事件监听改变model层数据，model通过数据绑定操作view变化 
 ![avatar](https://github.com/lusteng/qs/blob/master/images/mvvm-demo.jpg)
