@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-29 16:04:56
- * @LastEditTime: 2019-10-12 17:03:09
+ * @LastEditTime: 2019-10-16 11:16:30
  * @LastEditors: Please set LastEditors
  -->
 # 平时过程中收录的一些知识点(面试也可以看看，无意进入的朋友可以看看，有问题可以issues)
@@ -665,6 +665,12 @@ Object.prototype.toString.call(arr);             // “[object Array]”
 var reg = /[hbc]at/gi;
 Object.prototype.toString.call(reg);             // “[object RegExp]”
 ```
+### 应对后端数据量过大的问题
+1. 后端能否聚合优化？ 过滤前端不需要的数据，减小数据量
+2. 后端数据量能否分片返回？ 后端拆分数据，分批段返回
+3. 前端数据懒加载？ 只渲染视图可见部分数据，提高感知性能
+参考例子： aas平台一次性加载几十个图表，后端做成分片，前端数据懒加载显示
+
 
 ### 使用echarts 碰到的坑
 tooltip 自定义显示，英文不会折行显示，
@@ -693,7 +699,10 @@ tips： 碰到无法解决问题时通过看源码解决
 [https://tech.youzan.com/react-animations/](https://tech.youzan.com/react-animations/)
 
 ### react使用fetch原因
-fetch 的API是基于Promise设计的，比较底层，低于做的一些封装，例如我们做了基于前端post方式的下载文件， 
+fetch 的API是基于Promise设计的，比较底层，低于做的一些封装，例如我们做了基于前端post方式的下载文件，  
+
+ 
+
 
 [面试题1](https://juejin.im/post/5d23e750f265da1b855c7bbe#heading-37)
 
