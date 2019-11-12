@@ -49,6 +49,8 @@
 2、vue的设计相对于传统jquery 数据与视图层分离，通过数据驱动视图
 3、vue三要素  1、响应式：监听data数据变化 2、模板引擎：解析模板，指令处理 3、渲染： vue模板如何渲染成html
 
+Vue不同于react单向数据流，双向数据流在处理表单时很爽，到时组件层级深容易数据不可控
+
 vue methods也是绑定在vue对象上，在render中生成，v-model即是render里面绑定个事件，set model的值
 
 vue与react的区别
@@ -90,6 +92,10 @@ mpvue  缺点  新建页面要重新npm run dev
 高级程序员，主动去解决问题，主动去寻找问题，然后思考怎样解决问题
 
 宏任务一般是：包括整体代码script，setTimeout，setInterval。
+
+fn.prototype 构造函数的原型对象
+fn.prototype.constructor 指向构造函数
+fn 的实例有个隐式指针 __proto__指向其构造函数的原型对象 fn.prototype
 
 ### 理解mvvm 
 可以拆分为m v vm，vm 是vue基于mvc的创新，将mvc模式应用于前端场景，vm是连接view视图层和model数据层的桥梁，达到数据驱动视图的效果，其中view通过事件监听改变model层数据，model通过数据绑定操作view变化 
