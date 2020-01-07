@@ -244,7 +244,10 @@ class B extends A {
   }
 }
 ```
-
+### cookie localstorage 
+cookie 是为了解决http请求无状态问题，不存储过多无关信息
+localStorage 存储数据量大，可以存储一些仅浏览器需要读写的信息
+过多存储cookie易造成cdn流量损耗
 
 ### 关键字new创建新实例对象发生的事情
 1. 创建新对象
