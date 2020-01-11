@@ -517,61 +517,6 @@ getName();   //4 运行时执行，表达式赋值函数，覆盖5的函数
 
 ```
 
-### XSS 和 CSRF
-#### XSS
-***
-XSS，即 Cross Site Script，中译是跨站脚本攻击，XSS 攻击是指攻击者在网站上注入恶意的客户端代码，通过恶意脚本对客户端网页进行篡改，从而在用户浏览网页时，对用户浏览器进行控制或者获取用户隐私数据的一种攻击方式。
-
-攻击者对客户端网页注入的恶意脚本一般包括 JavaScript，有时也会包含 HTML 和 Flash。有很多种方式进行 XSS 攻击，但它们的共同点为：将一些隐私数据像 cookie、session 发送给攻击者，将受害者重定向到一个由攻击者控制的网站，在受害者的机器上进行一些恶意操作。
-
-XSS攻击可以分为3类：
-    反射型（非持久型）:例如通过访问链接带上xs代码
-    存储型（持久型）：将xs代码提交到服务器存储起来
-    基于DOM。
-
-防范方法：
-页面预防
-1. 对用户页面输入的内容进行处理
-+ 编码 对<、 >、 "、'、空格、换行等进行字符实体编码
-+ 过滤 过滤掉script、link、iframe、frame等标签以及便签上的属性、事件 
-+ 解码输出
-
-[js xss 转码库](https://github.com/leizongmin/js-xss)
-
-cookie安全
-1. 设置重要的cookie HttpOnly，阻止可能跨站的xs代码读取cookie
-
-
-1. 浏览器将禁止页面的Javascript 访问带有 HttpOnly 属性的Cookie。
-2. 输入检查 
-
-
-> 用户的任何输入都不能相信。 对于用户的任何输入要进行检查、过滤和转义。建立可信任的字符和 HTML 标签白名单，对于不在白名单之列的字符或者标签进行过滤或编码。
-3. 输出检查
-> 用户的输入会存在问题，服务端的输出也会存在问题。一般来说，除富文本的输出外，在变量输出到 HTML 页面时，可以使用编码或转义的方式来防御 XSS 攻击。例如利用 sanitize-html 对输出内容进行有规则的过滤之后再输出到页面中。
-
-
-[如何防止XSS攻击？](https://juejin.im/post/5bad9140e51d450e935c6d64)
-
-#### CSRF
-****
-CSRF，即 Cross Site Request Forgery，中译是跨站请求伪造，是一种劫持受信任用户向服务器发送非预期请求的攻击方式。
-
-通常情况下，CSRF 攻击是攻击者借助受害者的 Cookie 骗取服务器的信任，可以在受害者毫不知情的情况下以受害者名义伪造请求发送给受攻击服务器，从而在并未授权的情况下执行在权限保护之下的操作。
-
-防范方法： 
-1. 验证码(只部分接口有效)
-2. Referer Check
-    根据 HTTP 协议，在 HTTP 头中有一个字段叫 Referer，它记录了该 HTTP 请求的来源地址。通过 Referer Check，可以检查请求是否来自合法的"源"。
-3. Token 验证
-   例如： PHP Laravel框架VerifyCSRFToken中间件生成X-XSRF-TOKEN验证是否跨站请求
-
-[浅谈CSRF攻击方式](https://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html)
-
-
-
-[浅说XSS和CSRF](https://github.com/dwqs/blog/issues/68)
-
 
 ### vue Object.defineProperty 的缺陷
 1. 在Vue中，Object.defineProperty无法监控到数组下标的变化，导致直接通过数组的下标给数组设置值，不能实时响应。 为了解决这个问题，经过vue内部处理后可以使用以下几种方法来监听数组
