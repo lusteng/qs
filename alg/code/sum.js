@@ -1,3 +1,6 @@
-export function sum(a, b){
-     return a + b
-}
+function reverse(str) {
+      return [...str].reverse().join('')   
+    
+    }
+ 
+   module.exports = reverse;
