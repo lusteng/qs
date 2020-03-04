@@ -4,7 +4,7 @@
   "description": "leetcode",
   "main": "index.js",
   "scripts": {
-    "test": "jest ./test/index.js"
+    "test": "jest ./test/index.test.js"
   },
   "repository": {
     "type": "git",

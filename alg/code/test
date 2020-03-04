@@ -1,0 +1,42 @@
+1、权威服务器主备切换功能 
+2、权威服务器数据同步展示
+3、cdn兜底后端数据对接
+
+
+
+218.17.157.251
+hongyaogang
+yunfan_10086
+
+6b1ea8
+
+
+Yfcdn!123
+
+权威服务器主备切换 刷新功能去掉
+
+修改主备切换
+name-server/set_ns/{ns}
+
+权威服务器查询 总数 进度 ：sub_status
+获取失败线路 ： sub—line-status
+
+
+页面同步状态展示
+sync——dnspod/sub_status  查询所有策略的同步状态
+
+查询当线路  sync——dnspod/sub/{sub}/line-status
+
+域名 线路管理
+
+其他配置 
+ip展示
+
+区域配置关联列表展示修改
+调度策略、DNS域名同步dnspod数据对接
+
+
+权威服务器数据对接
+计费系数权限分离测试问题修改上线
+
+6RYR-8ENC-QC51-P3LG-ER0W
