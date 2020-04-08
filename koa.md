@@ -173,5 +173,38 @@ pm2 restart (id|all)
 pm2 delete (id|all)
 ```
 
+### Koa 洋葱模型 
+```js
+app.use(async (ctx, next) => {
+    console.log(1);
+    await next()
+    console.log(6); 
+})
+
+app.use(async (ctx, next) => {
+    console.log(2);
+    await next()
+    console.log(5); 
+})
+app.use(async (ctx, next) => {
+    console.log(3); 
+    await next()
+    console.log(4); 
+})
+
+//执行结果
+1
+2
+3
+4
+5
+6
+```
+> 何为洋葱模型？
+koa 中间件看成洋葱模型的一层，多个中间件糅合成一个洋葱模型(以next为边界)，执行结果先进后出，有点像洋葱的从外层剥离到内层，然后又从内层剥离到外层
+
+> 洋葱模型的优点
+
+可以处理后置请求的数据逻辑，前置可以访问到后置请求的数据
 
 

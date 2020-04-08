@@ -21,3 +21,18 @@ USER.find({name: "test"})
 ```
 
 [mongoose文档](https://mongoosedoc.top/docs/guide.html)
+
+
+
+mac下启动mongod 报错 
+```js
+exception in initAndListen: NonExistentPath: Data directory /data/db not found., terminating
+```
+mac 系统不允许更改根目录、需要创建一个非根目录文件当mongod的数据库目录
+
+启动mongod以指定的数据库启动
+```js
+mongod --dbpath ~/data/db
+```
+tips: mac 系统使用图形界面mongodb指令？
+输入mongo 显示mongodb版本以及命令界面
