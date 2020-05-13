@@ -91,13 +91,13 @@ ssr 前端页面直出优化(seo和首屏加载)
 ## HTTP缓存优化
 > 缓存机制分为浏览器强缓存(cache-control 、 expire) 与 协商缓存
 
-### 强缓存
+### 强缓存(cache-control: max-age / expire 命中缓存不向服务器发送请求)
 > 服务端通过http response header头告诉文件怎样把文件缓存下来
 <strong>Cache-Control</strong>
 
 <img src="./images/optimize/cache-control.png" />
 
-1. ache-control: max-age=xxxx 
+1. cache-control: max-age=xxxx 
 服务端客户端在xxx秒的有效期内，如果有请求该资源的需求的话就直接读取缓存,statu code:200 ，如果用户做了刷新操作，就向服务器发起http请求
 
 2. cache-control: max-age=xxxx，public 
@@ -117,7 +117,7 @@ immutable 客户端在xxx秒的有效期内，如果有请求该资源的需求�
 
 优先级低于Cache-Control 设置一个过期时间，比对客户端时间，假如客户端时区与服务端不一致，容易造成缓存失效问题
 
-### 协商缓存(Last-Modified / If-Modified-Since和Etag / If-None-Match)
+### 协商缓存(Last-Modified / If-Modified-Since和Etag / If-None-Match 先向服务器发送请求再确定是否命中缓存)
 
 > Etag 优先级高于 Last-Modified，Last-Modified精确颗粒度只能精确到秒
 
@@ -144,6 +144,27 @@ immutable 客户端在xxx秒的有效期内，如果有请求该资源的需求�
 2. 服务器通过last-modified和etag验证资源是否命中协商缓存？ yes, 返回304，从本地缓存读取资源， no, 返回资源数据
 
 3. 强缓存和协商缓存都没命中， 直接从服务器加载资源
+
+
+[强缓存与协商缓存](https://github.com/amandakelake/blog/issues/41)
+
+
+### 用户操作对缓存的改变
+1. 刷新(点击刷新按钮或者按F5，会触发这种行为)
+    浏览器直接对本地的缓存文件过期，但是会带上If-Modifed-Since，If-None-Match（如果上一次response带Last-Modified, Etag）这就意味着服务器会对文件检查新鲜度，返回结果可能是304，也有可能是200.
+
+2. 强制刷新(用户按Ctrl+F5 )
+    浏览器不仅会对本地文件过期，而且不会带上If-Modifed-Since，If-None-Match，相当于之前从来没有请求过，返回结果是200.
+
+3. 地址栏回车
+    浏览器发起请求，按照正常流程，本地检查是否过期，然后服务器检查新鲜度，最后返回内容。 
+
+
+
+
+针对不常更新的静态文件，cache-control: max-age 可以设置长一点， cdn资源设置短一点  针对强缓存时间长的静态文件，需要更新可以更新hash后缀
+针对不同文件的更新频率设置不同的  cache-control: max-age  甚至走协商缓存
+
 
 
 Q：如何理解的前端性能优化？

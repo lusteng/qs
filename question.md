@@ -2,9 +2,11 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-29 16:04:56
- * @LastEditTime: 2019-10-16 11:16:30
+ * @LastEditTime: 2020-05-08 10:35:39
  * @LastEditors: Please set LastEditors
  -->
+ 
+
 # 平时过程中收录的一些知识点(面试也可以看看，无意进入的朋友可以看看，有问题可以issues)
 
 
@@ -339,6 +341,7 @@ console.log('script end');
 
 ### React setState什么时候是同步的
 > 放入setTimeout 等异步队列时，变成同步执行
+
 ```
 class Example extends React.Component {
     constructor() {
@@ -584,6 +587,20 @@ defer 和 async 的区别在于：
 > 参考vuex的源码处理
 (https://github.com/vuejs/vuex/blob/dev/src/util.js#L22)
 
+### 深拷贝和浅拷贝的区别
+> JavaScript存储对象都是存地址的，所以浅拷贝会导致 obj1 和obj2 指向同一块内存地址。改变了其中一方的内容，都是在原来的内存上做修改会导致拷贝对象和源对象都发生改变，而深拷贝是开辟一块新的内存地址，将原对象的各个属性逐个复制进去。对拷贝对象和源对象各自的操作互不影响。
+
+### 堆和栈 (堆：二叉树数据接口，不影响使用取出 栈：线性表)
++ 栈内存主要用于存储各种基本类型的变量，包括Boolean、Number、String、Undefined、Null，**以及对象变量的指针
++ 堆内存用来存储对象
+一般来说栈内存线性有序存储，容量小，系统分配效率高。而堆内存首先要在堆内存新分配存储区域，之后又要把指针存储到栈内存中，效率相对就要低一些了。
+垃圾回收方面，栈内存变量基本上用完就回收了，而推内存中的变量因为存在很多不确定的引用，只有当所有调用的变量全部销毁之后才能回收。
+[参考文档](https://zhuanlan.zhihu.com/p/50206683)
+
+### Event Loop
+js先执行队列中的同步代码，再来检查
+
+
 
 ### 状态码分类描述
 + 1** 信息，服务器收到请求，需要请求者继续执行操作
@@ -658,7 +675,9 @@ fetch 的API是基于Promise设计的，比较底层，低于做的一些封装�
 ### ssr 会有哪些坑
 cpu/memory 可能爆了，出现异常不好定位调试，带权限接口与非权限接口有可能需要剥离(为了缓存)，网络加载时间过长慢了(如果不加缓存，以前可能是骨架屏，现在直接白屏)，由于需要起http服务工程上也复杂了很多
 
- 
+### 柯里化(currying)
+> 一个函数降维的过程，将复杂的问题简单化，将接受多参数的函数转化成接受单一参数的函数。
+
 
 
 [面试题1](https://juejin.im/post/5d23e750f265da1b855c7bbe#heading-37)
