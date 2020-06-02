@@ -8,87 +8,34 @@
 <style>body{height: 10000px}</style>
 <body>
     <button id="submit">提交</button>
-    <script>
-        /**
-         * @description: 节流 
-         * @param {fn} 回调函数
-         * @param {timer} 节流频率
-         * @param {bool} 是否立即执行
-         * @return: null
-         */ 
-         function throttle(func, wait ,type) { 
-        let timeout; 
-    return function() {
-        let context = this;
-        let args = arguments;
-        if(type===1){
-            let now = Date.now();
-
-            if (now - previous > wait) {
-                func.apply(context, args);
-                previous = now;
-            }
-        }else if(type===2){
-            if (!timeout) {
-                timeout = setTimeout(() => {
-                    timeout = null;
-                    func.apply(context, args)
-                }, wait)
-            }
-        }
-
-    }
-}
- 
-
-        // const cb = () => {
-        //     console.log('执行了');
-        // }
-
-        // let thro = throttle(cb, 1000, true)
-
-        // setInterval(() => {
-        //     thro()
-        // }, 300)
-
-
-        function debounce(fn, timer, bool){
-            let  sw = +new Date()
-            let _bool = bool 
-            let _this = this 
-
-            return function(){
-                let now = + new Date()
-                if(now - sw > timer){
-                    fn.call(_this)
-                    sw = now
-                } else{
-                    sw = now
-                }
-                if(_bool){
-                    fn.call(_this)
-                    _bool = false
-                }
-
-            }
-        }
-
-        const cb = () => {
-            console.log('执行了');
-        }
-
- 
-        window.onload = function(){
-            function sub(){
-                console.log('我要提交');
-                
+    <script>    
+        Function.prototype.apply = function(context){ 
+            let fn = this
+            if(typeof fn !== 'function'){
+                throw new Error('must function params')
+                return 
             } 
-            document.getElementById('submit').onclick = debounce(sub, 1000, false)
-            window.onscroll = throttle(() => {
-                console.log('滚动了。。。');
-                
-            }, 1000, 2)
+            let res 
+            if(!context) context = window
+            context.fn = fn
+            res = arguments.length > 1 ? context.fn(...[...arguments].slice(1)) : context.fn()
+            delete context.fn
+            return res
         }
+        window.a = 3333333
+        window.onload = () => {
+            let obj = {
+                a: "ffff"
+            }
+            function c(af){
+                console.log(af); 
+                console.log(this.a); 
+            }
+            document.getElementById('submit').onclick = function(){
+                c.call1(window, '')
+            }
+        }
+
     </script>
 </body>
 </html>
